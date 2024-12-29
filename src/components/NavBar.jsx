@@ -9,6 +9,10 @@ function NavBar(props) {
         navigate('/')
     }
 
+    function setAllLocations() {
+        navigate('/all')
+    }
+
     function setGyms() {
         navigate('/gyms')
     }
@@ -21,9 +25,10 @@ function NavBar(props) {
     <Container fluid>
         <Row>
             <Col>
-                <Button onClick={setHome} > Home </Button>
-                <Button onClick={setGyms} > Gyms </Button>
-                <Button onClick={setLibraries} > Libraries </Button>
+                <Button onClick={setHome}> Home </Button>
+                <Button onClick={setAllLocations}> All </Button>
+                <Button onClick={setGyms}> Gyms </Button>
+                <Button onClick={setLibraries}> Libraries </Button>
             </Col>
             <Col>
                 <h1> BadgerFlow </h1>

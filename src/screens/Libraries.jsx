@@ -6,21 +6,18 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import NavBar from '../components/NavBar'
 import Location from '../components/Location'
 
+import { getClibData } from '../helpers/FetchData'
+
 function Libraries(props) {
 
     const [data, setData] = useState([])
 
     useEffect(() => {
-        const getData = async () => {
-            const resp = await fetch('https://waitz.io/live/uwmadison', {
-                method : "GET"
-            })
-            let libData = await resp.json()
-            const regions = libData.data[0].subLocs
-            console.log(regions)
-            setData(regions)
+        const loadData = async () => {
+            const clibData = await getClibData()
+            setData(clibData)
         }
-        getData()
+        loadData()
     }, [])
 
     return (

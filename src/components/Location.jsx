@@ -2,8 +2,6 @@ import { Card } from 'react-bootstrap'
 
 const Location = (props) => {
 
-    console.log(props)
-
     // Placeholder data until parseProps runs
     const data = {
         id : 9999, 
@@ -87,7 +85,7 @@ const Location = (props) => {
 
     parseProps()
 
-    const strDiff = formatTimeDifference(new Date() - data.lastUpdated)
+    const strDiff = formatTimeDifference(new Date() - new Date(data.lastUpdated))
 
     return (
     <Card>
