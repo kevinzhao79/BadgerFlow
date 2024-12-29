@@ -1,11 +1,54 @@
-import { Card } from "react-bootstrap"
-import moment from 'moment'
+import { Card } from 'react-bootstrap'
 
 const Location = (props) => {
 
-    const lastUpdated = new Date(props.LastUpdatedDateAndTime)
-    const now = new Date()
-    const diff = now - lastUpdated
+    console.log(props)
+
+    // Placeholder data until parseProps runs
+    const data = {
+        id : 9999, 
+        name : "Name", 
+        facility: "Facility", 
+        type: "Type of Building", 
+        lastUpdated: new Date(), 
+        lastCount: 25, 
+        capacity: 100
+    }
+
+    function parseProps() {
+
+        // data came from gym API
+        if (props.hasOwnProperty('LocationId')) {
+            data.id = props.LocationId
+            data.name = props.LocationName
+            data.facility = props.FacilityName
+            data.type = 'Gym'
+            data.lastUpdated = props.LastUpdatedDateAndTime
+            data.lastCount = props.LastCount
+            data.capacity = props.TotalCapacity
+        }
+
+        // Otherwise, then props came from college library API
+        else {
+            data.id = props.id
+            switch (props.name) {
+                case '2191': data.name = 'College Library 2nd Floor'
+                break
+                case '2250 / Computer Lab': data.name = 'College Library 2nd Floor Computer Lab'
+                break
+                case '3191': data.name = "College Library 3rd Floor"
+                break
+                case '3250 / WisCEL': data.name = 'College Library 3rd Floor Computer Lab'
+                break
+                default: data.name = 'College Library Unknown'
+            }
+            data.facility = props.facility
+            data.type = 'Library'
+            data.lastUpdated = new Date()
+            data.lastCount = props.people
+            data.capacity = props.capacity
+        }
+    }
     
     /**
      * @param {int} diff the difference between two Date() objects, in Unix time (MS)
@@ -18,41 +61,41 @@ const Location = (props) => {
         if (! remainingSeconds) {
             return "0 Seconds"
         }
-        
-        const year = 365 * 24 * 60 * 60
-        const month = 30 * 24 * 60 * 60
+
         const day = 24 * 60 * 60
         const hour = 60 * 60
         const minute = 60
-      
-        const years = Math.floor(remainingSeconds / year)
-        remainingSeconds %= year
-        const months = Math.floor(remainingSeconds / month)
-        remainingSeconds %= month
-        const days = Math.floor(remainingSeconds / day)
+
+        if (remainingSeconds > day) {
+            return "Over 1 Day"
+        }
+
         remainingSeconds %= day
         const hours = Math.floor(remainingSeconds / hour)
         remainingSeconds %= hour
         const minutes = Math.floor(remainingSeconds / minute)
+        remainingSeconds %= minute
+        const seconds = Math.floor(remainingSeconds)
       
         const timeParts = []
-        if (years) timeParts.push(`${years} Year${years > 1 ? 's' : ''}`)
-        if (months) timeParts.push(`${months} Month${months > 1 ? 's' : ''}`)
-        if (days) timeParts.push(`${days} Day${days > 1 ? 's' : ''}`)
         if (hours) timeParts.push(`${hours} Hour${hours > 1 ? 's' : ''}`)
         if (minutes) timeParts.push(`${minutes} Minute${minutes > 1 ? 's' : ''}`)
+        if (seconds) timeParts.push(`${seconds} Second${seconds > 1 ? 's' : ''}`)
       
         return timeParts.join(', ')
     }
 
-    const strDiff = formatTimeDifference(diff)
+    parseProps()
+
+    const strDiff = formatTimeDifference(new Date() - data.lastUpdated)
 
     return (
-        <Card>
-            {props.LocationName}
-            <p>Capacity: {props.LastCount} out of {props.TotalCapacity}</p>
-            <p> Last Updated: {strDiff} ago</p> 
-        </Card>
+    <Card>
+        <h3>{data.name}</h3>
+        <p>Facility: {data.facility}</p>
+        <p>Capacity: {data.lastCount} out of {data.capacity}</p>
+        <p> Last Updated: {strDiff} ago</p> 
+    </Card>
     )
 
 }
