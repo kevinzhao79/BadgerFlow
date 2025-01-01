@@ -1,8 +1,8 @@
-# React + Vite
+**BadgerFlow** is a dashboard for UW-Madison students that displays the current hours, availability, and activities for the main gyms (_Nicholas Recreation Center, Bakke Recreation Center, The Shell_) and libraries (_College, Memorial, Law, Steenbock_). Some key features:
+- Tracking of each region in every building throughout the day, logging people/capacity and current activity.
+- Pin regions to mark as 'favorites' for easier access 
+- Database that stores past availabilities and recommends when certain regions are busiest from past weeks/years.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Developed using React.js + CSS (_Frontend_), Python + PostgreSQL (_Backend/Data Analysis_), Jenkins (_CI/CD_).
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Currently under development.
