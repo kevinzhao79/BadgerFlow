@@ -1,0 +1,42 @@
+/* navbar.css */
+
+.container {
+    padding: var(--card-padding);
+}
+
+/* Align NavBar buttons to be on the outer edges of the container */
+.col:first-child {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.col:last-child {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Styling for buttons */
+button.btn {
+    padding: var(--button-padding);
+    margin: var(--button-margin);
+    background-color: var(--background-color);
+    border-radius: var(--button-radius);
+    border-color: var(--accent-color);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: var(--secondary-size);
+    font-family: var(--primary-font);
+}
+
+button.btn:hover {
+    background-color: var(--hover-color);
+    border-color: var(--accent-color);
+}
+
+/* Styling for heading */
+h1 {
+    text-align: center;
+    color: var(--text-color);
+    font-family: var(--primary-font);
+    font-size: var(--title-size);
+}

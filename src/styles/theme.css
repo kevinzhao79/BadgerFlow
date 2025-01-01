@@ -1,0 +1,32 @@
+/* theme.css */
+
+/* Imports Raleway and Nunito fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=Raleway:wght@400;700&display=swap');
+
+:root {
+    /* Color palette */
+    --primary-color: #C4CAD0;
+    --hover-color: #878C8F;
+    --accent-color: #A4969B;
+    --text-color: #655560;
+    --background-color: #FCF7FF;
+
+    /* Font styles */
+    --primary-font: 'Raleway', sans-serif;
+    --secondary-font: 'Nunito', sans-serif;
+
+    /* Font sizes */
+    --title-size: 48px;
+    --heading-size: 32px;
+    --primary-size: 20px;
+    --secondary-size: 14px;
+
+    /* Spacing and margins */
+    --button-padding: 10px 20px;
+    --button-margin: 5px;
+    --button-radius: 5px;
+
+    --card-padding: 10px 20px;
+    --card-margin: 5px;
+    --card-radius: 15px;
+}

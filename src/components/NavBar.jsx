@@ -1,5 +1,8 @@
 import { Container, Button, Col, Row } from "react-bootstrap"
-import { Navigate, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
+
+import '../styles/theme.css'
+import '../styles/navbar.css'
 
 function NavBar(props) {
 

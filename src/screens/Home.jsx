@@ -13,7 +13,7 @@ function Home(props) {
             <NavBar />
         </Row>
         <Row>
-        Home
+            <h2> Home </h2>
         </Row>
     </Container>
     )

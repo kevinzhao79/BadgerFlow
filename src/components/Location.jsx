@@ -1,5 +1,7 @@
 import { Card } from 'react-bootstrap'
 
+import '../styles/location.css'
+
 const Location = (props) => {
 
     // Placeholder data until parseProps runs
@@ -89,10 +91,10 @@ const Location = (props) => {
 
     return (
     <Card>
-        <h3>{data.name}</h3>
-        <p>Facility: {data.facility}</p>
-        <p>Capacity: {data.lastCount} out of {data.capacity}</p>
-        <p> Last Updated: {strDiff} ago</p> 
+        <Card.Title>{data.name}</Card.Title>
+        <Card.Body>
+            <Card.Text>Facility: {data.facility}{'\n'}Capacity: {data.lastCount} out of {data.capacity}{'\n'}Last Updated: {strDiff} ago</Card.Text>
+        </Card.Body>
     </Card>
     )
 

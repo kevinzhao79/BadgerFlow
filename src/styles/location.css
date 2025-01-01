@@ -1,0 +1,28 @@
+/* location.css */
+
+.container{
+    padding: var(--card-padding);
+    margin: var(--card-margin);
+}
+
+.card{
+    margin: var(--card-margin);
+    background-color: var(--background-color);
+    border-radius: var(--card-radius);
+    border-color: var(--accent-color);
+    color: var(--text-color);
+}
+
+.card-body{
+    margin: var(--card-margin);
+}
+
+.card-title{
+    font-size: var(--primary-size);
+    font-family: var(--secondary-font);
+}
+
+.card-text{
+    font-size: var(--secondary-size);
+    font-family: var(--secondary-font);
+}
