@@ -1,3 +1,5 @@
+/* NavBar.jsx */
+
 import { Container, Button, Col, Row } from "react-bootstrap"
 import { useNavigate } from 'react-router'
 

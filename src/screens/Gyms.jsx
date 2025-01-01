@@ -1,5 +1,7 @@
+/* Gyms.jsx */
+
 import { useState, useEffect } from 'react'
-import { Container, Row, Col} from 'react-bootstrap'
+import { Container, Row} from 'react-bootstrap'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 

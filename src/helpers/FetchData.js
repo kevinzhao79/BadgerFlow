@@ -1,3 +1,5 @@
+/* fetchData.js */
+
 /**
  * Grabs the data for all gym-related Locations (Nick, Bakke, Shell)
  * @returns A list of Locations
