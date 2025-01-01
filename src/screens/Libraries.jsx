@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import { Container, Row, Col} from 'react-bootstrap'
+import { Container, Row} from 'react-bootstrap'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import NavBar from '../components/NavBar'
-import Location from '../components/Location'
+import Locations from '../components/Locations'
 
 import { getClibData } from '../helpers/FetchData'
 
@@ -29,11 +29,7 @@ function Libraries(props) {
                 <h3>Libraries</h3>
             </Row>
             <Row>
-                {data.length === 0 ? <p>Loading...</p> : data.map(region => (
-                <Col sm={12} md={6} lg={4} key={region.id}>
-                    <Location {...region} facility={"College Library"} />
-                </Col>))
-                }
+                {data.length === 0 ? <p> Still loading! </p> : <Locations data={data} />}
             </Row>
         </Container>
         )

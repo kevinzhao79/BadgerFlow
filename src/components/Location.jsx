@@ -5,15 +5,15 @@ import '../styles/location.css'
 const Location = (props) => {
 
     // Placeholder data until parseProps runs
-    const data = {
-        id : 9999, 
-        name : "Name", 
-        facility: "Facility", 
-        type: "Type of Building", 
-        lastUpdated: new Date(), 
-        lastCount: 25, 
-        capacity: 100
-    }
+    // const data = {
+    //     id : 9999, 
+    //     name : "Name", 
+    //     facility: "Facility", 
+    //     type: "Type of Building", 
+    //     lastUpdated: new Date(), 
+    //     lastCount: 25, 
+    //     capacity: 100
+    // }
 
     function parseProps() {
 
@@ -81,19 +81,25 @@ const Location = (props) => {
         if (hours) timeParts.push(`${hours} Hour${hours > 1 ? 's' : ''}`)
         if (minutes) timeParts.push(`${minutes} Minute${minutes > 1 ? 's' : ''}`)
         if (seconds) timeParts.push(`${seconds} Second${seconds > 1 ? 's' : ''}`)
+
+        if (timeParts.length === 0) {
+            return 'Less than 1 second'
+        }
       
         return timeParts.join(', ')
     }
 
-    parseProps()
-
-    const strDiff = formatTimeDifference(new Date() - new Date(data.lastUpdated))
+    const timeDiff = formatTimeDifference(new Date() - new Date(props.lastUpdated))
 
     return (
     <Card>
-        <Card.Title>{data.name}</Card.Title>
+        <Card.Title>{props.name}</Card.Title>
         <Card.Body>
-            <Card.Text>Facility: {data.facility}{'\n'}Capacity: {data.lastCount} out of {data.capacity}{'\n'}Last Updated: {strDiff} ago</Card.Text>
+            <Card.Text>
+                Facility: {props.facility}<br />
+                Capacity: {props.count} out of {props.capacity}<br />
+                Last Updated: {timeDiff} ago
+            </Card.Text>
         </Card.Body>
     </Card>
     )

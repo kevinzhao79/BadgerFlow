@@ -3,8 +3,9 @@ import { Container, Row, Col} from 'react-bootstrap'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import Location from '../components/Location'
+import Locations from '../components/Locations'
 import NavBar from '../components/NavBar'
+
 import { getGymData } from '../helpers/FetchData'
 
 function Gyms(props) {
@@ -25,11 +26,7 @@ function Gyms(props) {
             <NavBar />
         </Row>
         <Row>
-        {! data ? <p> Still loading! </p> : 
-        data.map(location => (
-            <Col sm={12} md={6} lg={4} key={location.LocationId}>
-                <Location {...location} />
-            </Col>))}
+            {data.length === 0 ? <p> Still loading! </p> : <Locations data={data} />}
         </Row>
     </Container>
     )

@@ -3,10 +3,10 @@ import { Container, Row, Col} from 'react-bootstrap'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import Location from '../components/Location'
 import NavBar from '../components/NavBar'
+import Locations from '../components/Locations'
 
-import { getGymData, getClibData } from '../helpers/FetchData'
+import { getGymData, getClibData } from '../helpers/fetchData'
 
 function AllLocations(props) {
 
@@ -26,12 +26,8 @@ function AllLocations(props) {
         <Row>
             <NavBar />
         </Row>
-        <Row>
-        {! data ? <p> Still loading! </p> : 
-        data.map(location => (
-            <Col sm={12} md={6} lg={4} key={location.LocationId ? location.LocationId : location.id}>
-                <Location {...location}/>
-            </Col>))}
+        <Row className='d-flex align-items-stretch'>
+            {data.length === 0 ? <p> Still loading! </p> : <Locations data={data} />}
         </Row>
     </Container>
     )
