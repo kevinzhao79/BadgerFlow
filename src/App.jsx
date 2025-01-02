@@ -2,7 +2,7 @@
 
 import { BrowserRouter, Route, Routes } from 'react-router';
 
-import './App.css'
+import './app.css'
 
 import Home from './screens/Home'
 import AllLocations from './screens/AllLocations'

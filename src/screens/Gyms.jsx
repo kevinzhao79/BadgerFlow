@@ -27,9 +27,7 @@ function Gyms(props) {
         <Row>
             <NavBar />
         </Row>
-        <Row>
-            {data.length === 0 ? <p> Still loading! </p> : <Locations data={data} />}
-        </Row>
+        {data.length === 0 ? <p> Still loading! </p> : <Locations data={data} />}
     </Container>
     )
 }

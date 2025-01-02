@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
-import { Container, Row, Col} from 'react-bootstrap'
+import { Container, Row, Card} from 'react-bootstrap'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
+import '../styles/screens.css'
 
 import NavBar from '../components/NavBar'
 
@@ -12,9 +12,9 @@ function Home(props) {
         <Row>
             <NavBar />
         </Row>
-        <Row>
-            <h2> Home </h2>
-        </Row>
+        <Card>
+            <Card.Title>Welcome to BadgerFlow! </Card.Title>
+        </Card>
     </Container>
     )
 }

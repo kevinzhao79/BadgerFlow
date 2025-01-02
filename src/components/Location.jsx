@@ -4,7 +4,7 @@ import { Card } from 'react-bootstrap'
 
 import '../styles/location.css'
 
-import formatTimeDifference from '../helpers/timeDiff'
+import formatTimeDifference from '../helpers/formatTimeDifference'
 
 const Location = (props) => {
 

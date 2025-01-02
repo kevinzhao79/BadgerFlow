@@ -24,14 +24,12 @@ function AllLocations(props) {
     }, [])
 
     return (
-    <Container fluid>
-        <Row>
-            <NavBar />
-        </Row>
-        <Row className='d-flex align-items-stretch'>
+        <Container fluid>
+            <Row>
+                <NavBar />
+            </Row>
             {data.length === 0 ? <p> Still loading! </p> : <Locations data={data} />}
-        </Row>
-    </Container>
+        </Container>
     )
 }
 

@@ -1,0 +1,29 @@
+/* screens.css */
+
+* {
+    box-sizing: border-box;
+}
+
+/* Remove scrollbars */
+* {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+*::-webkit-scrollbar { 
+    display: none;
+}
+
+#root {
+    width: 100vw;
+    height: 100vh;
+}
+
+.container-fluid {
+    width: 100vw;
+    min-height: 100%;
+    height: fit-content;
+    align-items: center; /* Center content horizontally */
+    padding: var(--container-padding);
+    background-color: var(--primary-color);
+
+}

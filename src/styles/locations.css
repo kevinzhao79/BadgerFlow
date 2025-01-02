@@ -1,0 +1,7 @@
+/* locations.css */
+
+.location-container > .col {
+    display: flex; /* Make Cols stretch to equal height */
+    flex: 1; /* Allow equal width distribution */
+    min-height: 250px; /* Optional: Define a minimum height for columns */
+}

@@ -26,7 +26,9 @@
     --button-margin: 5px;
     --button-radius: 5px;
 
-    --card-padding: 10px 20px;
-    --card-margin: 5px;
+    --card-padding: 1em;
+    --card-margin: 10px 0px;
     --card-radius: 15px;
+
+    --container-padding: 10px 25px;
 }

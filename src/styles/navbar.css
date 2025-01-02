@@ -1,7 +1,11 @@
 /* navbar.css */
 
-.container {
-    padding: var(--card-padding);
+navbar {
+    height: 15vh;
+    display: flex; /* Optional: Use Flexbox to align content */
+    flex-direction: row;
+    justify-content: space-between; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
 }
 
 /* Align NavBar buttons to be on the outer edges of the container */

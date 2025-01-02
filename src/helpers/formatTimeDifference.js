@@ -39,4 +39,4 @@
     return timeParts.join(', ')
 }
 
-export default timeDiff
+export default formatTimeDifference

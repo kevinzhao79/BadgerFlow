@@ -1,8 +1,10 @@
 /* Locations.jsx */
 
-import { Col } from "react-bootstrap"
+import { Row, Col } from "react-bootstrap"
 
 import Location from "./Location"
+
+import '../styles/locations.css'
 
 import normalizeData from "../helpers/normalizeData"
 
@@ -19,13 +21,13 @@ import normalizeData from "../helpers/normalizeData"
  const Locations = (props) => {
 
     const normalized = JSON.parse(normalizeData(props.data))
-    return <>
+    return <Row className='location-container'>
         {normalized.map(location => (
             <Col sm={12} md={6} lg={4} key={location.id}>
                 <Location {...location}/>
             </Col>)
         )}
-    </>
+    </Row>
 
 }
 
