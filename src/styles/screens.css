@@ -13,6 +13,7 @@
     display: none;
 }
 
+/* Make content fill screen */
 #root {
     width: 100vw;
     height: 100vh;
@@ -22,7 +23,7 @@
     width: 100vw;
     min-height: 100%;
     height: fit-content;
-    align-items: center; /* Center content horizontally */
+    align-items: center;
     padding: var(--container-padding);
     background-color: var(--primary-color);
 

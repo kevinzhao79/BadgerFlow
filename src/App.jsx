@@ -9,6 +9,7 @@ import AllLocations from './screens/AllLocations'
 import Gyms from './screens/Gyms'
 import Libraries from './screens/Libraries'
 import PageNotFound from './screens/PageNotFound'
+import Dev from './screens/Dev';
 
 function App() {
 
@@ -17,8 +18,9 @@ function App() {
         <Routes>
         <Route index element={<Home/>} />
         <Route path='/all' element={<AllLocations />} />
-        <Route path="/gyms" element={<Gyms/>} />
-        <Route path="/libraries" element={<Libraries />} />
+        <Route path='/gyms' element={<Gyms/>} />
+        <Route path='/libraries' element={<Libraries />} />
+        <Route path='/dev' element={<Dev />} />
         <Route path="*" element={<PageNotFound />} />
         </Routes>
     </BrowserRouter>

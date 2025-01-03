@@ -26,6 +26,10 @@ function NavBar(props) {
         navigate('/libraries')
     }
 
+    function setDev() {
+        navigate('/dev')
+    }
+
     return (
     <Container fluid>
         <Row>
@@ -34,6 +38,7 @@ function NavBar(props) {
                 <Button onClick={setAllLocations}> All </Button>
                 <Button onClick={setGyms}> Gyms </Button>
                 <Button onClick={setLibraries}> Libraries </Button>
+                <Button onClick={setDev}> Dev </Button>
             </Col>
             <Col>
                 <h1> BadgerFlow </h1>
