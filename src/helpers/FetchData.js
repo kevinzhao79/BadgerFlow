@@ -34,40 +34,11 @@ export const getClibData = async () => {
     const body = JSON.stringify({
         filterData: {
           filters: [
-            {
-              filterName: 'StartDate',
-              value: '2025-01-21 00:00:00',
-              displayValue: '',
-              filterType: 3,
-            },
-            {
-              filterName: 'EndDate',
-              value: '2025-01-22 00:00:00',
-              filterType: 3,
-              displayValue: '',
-            },
-            {
-              filterName: 'TimeZone',
-              value: '64',
-              displayValue: '',
-              filterType: 2,
-            },
-            {
-              filterName: 'RollupEventsToReservation',
-              value: 'false',
-              displayValue: '',
-            },
-            {
-              filterName: 'ResultType',
-              value: 'Daily',
-              displayValue: '',
-            },
-            {
-              filterName: 'Locations',
-              value: '1109',
-              displayValue: '',
-              filterType: 8,
-            },
+            {filterName: "StartDate", value: "2025-01-03 00:00:00", displayValue: "", filterType: 3},  
+            {filterName: "EndDate", value: "2025-01-04 00:00:00", filterType: 3, displayValue: ""}, 
+            {filterName: "TimeZone", value: "64", displayValue: "", filterType: 2}, 
+            {filterName: "RollupEventsToReservation", value: "false", displayValue: ""}, 
+            {filterName: "ResultType", value: "Daily", displayValue: ""}
           ],
         },
       })
@@ -79,22 +50,20 @@ export const getClibData = async () => {
     const EMSData = resp.data.d
   
     function prettify(input) {
+
+        /* Clean data to be JSON parseable */
+        let cleanedInput = input.replace(/\\"/g, '"') // Unescape double quotes
+        cleanedInput = cleanedInput.replace(/(?<!\\)\n/g, '\\n') // Escape unescaped newlines
+        cleanedInput = cleanedInput.replace(/,/g, ',\n') // Format commas for readability
+        cleanedInput = cleanedInput.replace(/&amp;[/s]?/g, '') // Remove &amp; 
+
+        cleanedInput = cleanedInput.replace(/"([^"]*?)"/g, (match) => {
+            return match.replace(/\n/g, ' ') // Replace newlines within each quoted string with spaces
+        });
     
-        let cleanedInput = input.replace(/\\"/g, '"')
-        cleanedInput = cleanedInput.replace(/,/g, ',\n')
-        cleanedInput = cleanedInput.replace(/&amp;\s/, '')
-        
-        try {
-
-            const parsedObject = JSON.parse(cleanedInput)
-            return JSON.stringify(parsedObject, null, 4)
-
-        } 
-        catch (error) {
-
-            console.error('Error parsing JSON:', error)
-            return cleanedInput
-        }
+        // Parse and pretty-print the JSON object
+        const parsedData = JSON.parse(cleanedInput);
+        return JSON.stringify(parsedData, null, 4);
     }
 
     return prettify(EMSData)
