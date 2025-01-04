@@ -1,6 +1,6 @@
 /* App.jsx */
 
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { BrowserRouter, Route, Routes } from 'react-router'
 
 import './app.css'
 
@@ -9,7 +9,8 @@ import AllLocations from './screens/AllLocations'
 import Gyms from './screens/Gyms'
 import Libraries from './screens/Libraries'
 import PageNotFound from './screens/PageNotFound'
-import Dev from './screens/Dev';
+import Other from './screens/Other'
+import Dev from './screens/Dev'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/all' element={<AllLocations />} />
         <Route path='/gyms' element={<Gyms/>} />
         <Route path='/libraries' element={<Libraries />} />
+        <Route path='/other' element={<Other />} />
         <Route path='/dev' element={<Dev />} />
         <Route path="*" element={<PageNotFound />} />
         </Routes>
