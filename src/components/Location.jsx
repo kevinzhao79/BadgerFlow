@@ -4,11 +4,13 @@ import { Card } from 'react-bootstrap'
 
 import '../styles/location.css'
 
-import { formatTimeDifference, formatHHMM } from '../helpers/formatTime'
+import { formatTimeDifference } from '../helpers/formatTime'
 
 const Location = (props) => {
 
     const timeDiff = formatTimeDifference(new Date() - new Date(props.lastUpdated))
+
+    let idCounter = 0
 
     return (
     <Card>
@@ -21,9 +23,9 @@ const Location = (props) => {
             </Card.Text>
             {props.events.length === 0 ? <></> : <Card.Text> Upcoming Events: </Card.Text>}
             {props.events.length === 0 ? <Card.Text>No upcoming events</Card.Text> : props.events.map(event => (
-            <Card.Text>
+            <Card.Text key={idCounter++}>
                 {event.name} <br />
-                {formatHHMM(event.start)} to {formatHHMM(event.end)}
+                {event.start} to {event.end}
             </Card.Text>))}
             
         </Card.Body>

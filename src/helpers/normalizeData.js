@@ -1,4 +1,5 @@
 /* normalizeData.js */
+import { formatHHMM } from '../helpers/formatTime'
 
 /**
  * Normalizes the Activity Data from Gym/Library APIs
@@ -62,12 +63,18 @@ function normalizeActivityData(activityData) {
  */
 function normalizeEMSData(locations, emsData) {
 
+    let idCounter = 1000
+
     for (let event of emsData) {
 
         // console.log(event)
 
         /* Extract only the relevant parts of the original event */
-        const newEvent = {name : event.EventName, start : event.EventStart, end : event.EventEnd}
+        const newEvent = {
+            name : event.EventName, 
+            start : formatHHMM(event.EventStart), 
+            end : formatHHMM(event.EventEnd), 
+        }
 
         /* If the event occurs in a pre-existing Location, add its event name, start time, and end time to Location.events */
         /* Switch statement is necessary as EMS Cloud room names do not line up with Activity Data room names, even when referencing the same room */
@@ -103,6 +110,7 @@ function normalizeEMSData(locations, emsData) {
 
             /* If not, create a new Location, add its event name, start time, and end time to Location.events */
             default: locations.set(event.Room, {
+                id : idCounter++, 
                 name : event.Room, 
                 facility : event.Building, 
                 type : 'Campus Building', 
@@ -111,15 +119,24 @@ function normalizeEMSData(locations, emsData) {
                 capacity : 0, 
                 events : [newEvent]
             })
-            //Nick Classroom
-            //Bakke Locker Room A - D
-            //Bakke Breakout Room 2143
-            //
+
         }
 
     }
 
     return Array.from(locations.values())
+
+}
+
+function removeDuplicateEvents(locations) {
+
+    for (let location of locations) {
+
+        const stringifiedMap = new Map(location.events.map(event => [JSON.stringify(event), event])).values()
+        const uniqueEvents = Array.from(stringifiedMap)
+        location.events = uniqueEvents
+
+    }
 
 }
 
@@ -141,18 +158,12 @@ function normalizeData(activityData, emsData) {
     /* Add fields to Location to include EMS Cloud data activities and their start/end times */
     const locations = normalizeEMSData(normalizedHash, emsData)
 
-    console.log(locations)
+    removeDuplicateEvents(locations)
 
-    return JSON.stringify(locations)
+    // console.log(locations)
+
+    return locations
 
 }
-
-    /*
-    1. Normalize Activity data
-    2. Get mapping of location.name -> Location in a hashmap
-    3. Parse through EMS Cloud data, and map facility + room to a location.name
-    4. Add fields to Location to include EMS Cloud data activities and their start/end times
-    5. Return the values of the hashmap
-    */
 
 export default normalizeData

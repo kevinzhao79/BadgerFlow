@@ -20,7 +20,8 @@ import normalizeData from "../helpers/normalizeData"
  */
  const Locations = (props) => {
 
-    const normalized = JSON.parse(normalizeData(props.data, props.emsData))
+    const normalized = normalizeData(props.data, props.emsData)
+
     return <Row className='location-container'>
         {normalized.map(location => (
             <Col sm={12} md={6} lg={4} key={location.id}>
