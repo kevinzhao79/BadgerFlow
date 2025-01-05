@@ -17,8 +17,8 @@ function Dev(props) {
         const loadData = async () => {
             let EMSData = await getEMSData()
             EMSData = JSON.parse(EMSData)
-            setData(EMSData.DailyBookingResults)
-            console.log(EMSData.DailyBookingResults)
+            console.log(EMSData)
+            setData(EMSData)
         }
         loadData()
     }, [])

@@ -1,10 +1,10 @@
 /* timeDiff.js */
 
 /**
-     * @param {int} diff the difference between two Date() objects, in Unix time (MS)
-     * @returns {string} a string representation of the time difference
-     */
- function formatTimeDifference(diff) {
+ * @param {int} diff the difference between two Date() objects, in Unix time (MS)
+ * @returns {string} a string representation of the time difference
+*/
+ export function formatTimeDifference(diff) {
         
     let remainingSeconds = Math.abs(diff / 1000)
 
@@ -39,4 +39,11 @@
     return timeParts.join(', ')
 }
 
-export default formatTimeDifference
+export function formatHHMM(time) {
+
+    const date = new Date(time)
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+
+}

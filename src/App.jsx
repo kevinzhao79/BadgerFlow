@@ -22,6 +22,7 @@ function App() {
         <Route path='/gyms' element={<Gyms/>} />
         <Route path='/libraries' element={<Libraries />} />
         <Route path='/other' element={<Other />} />
+        
         <Route path='/dev' element={<Dev />} />
         <Route path="*" element={<PageNotFound />} />
         </Routes>

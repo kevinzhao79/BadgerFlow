@@ -4,7 +4,7 @@ import { Card } from 'react-bootstrap'
 
 import '../styles/location.css'
 
-import formatTimeDifference from '../helpers/formatTimeDifference'
+import { formatTimeDifference, formatHHMM } from '../helpers/formatTime'
 
 const Location = (props) => {
 
@@ -16,9 +16,16 @@ const Location = (props) => {
         <Card.Body>
             <Card.Text>
                 Facility: {props.facility}<br />
-                Capacity: {props.count} out of {props.capacity}<br />
-                Last Updated: {timeDiff} ago
+                Capacity: {props.count} / {props.capacity}<br />
+                Last Updated: {timeDiff} ago <br />
             </Card.Text>
+            {props.events.length === 0 ? <></> : <Card.Text> Upcoming Events: </Card.Text>}
+            {props.events.length === 0 ? <Card.Text>No upcoming events</Card.Text> : props.events.map(event => (
+            <Card.Text>
+                {event.name} <br />
+                {formatHHMM(event.start)} to {formatHHMM(event.end)}
+            </Card.Text>))}
+            
         </Card.Body>
     </Card>
     )

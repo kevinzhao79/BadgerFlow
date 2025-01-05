@@ -56,14 +56,13 @@ export const getClibData = async () => {
         cleanedInput = cleanedInput.replace(/(?<!\\)\n/g, '\\n') // Escape unescaped newlines
         cleanedInput = cleanedInput.replace(/,/g, ',\n') // Format commas for readability
         cleanedInput = cleanedInput.replace(/&amp;[/s]?/g, '') // Remove &amp; 
-
         cleanedInput = cleanedInput.replace(/"([^"]*?)"/g, (match) => {
             return match.replace(/\n/g, ' ') // Replace newlines within each quoted string with spaces
         });
     
         // Parse and pretty-print the JSON object
         const parsedData = JSON.parse(cleanedInput);
-        return JSON.stringify(parsedData, null, 4);
+        return JSON.stringify(parsedData.DailyBookingResults, null, 4);
     }
 
     return prettify(EMSData)

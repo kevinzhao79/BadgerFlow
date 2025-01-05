@@ -1,33 +1,27 @@
 /* normalizeData.js */
 
 /**
- * Normalizes data from different APIs to have the properties listed below:
- * @param {List[Object]} data the data to be normalized
- * @param {string} name the name of the region/location
- * @param {string} facility the name of the facility that contains the region/location
- * @param {string} lastUpdated when this data was logged, in ISO 8601 format
- * @param {int} count how many people are at the region/location
- * @param {int} capacity how many people max can fit in the region/location
- * @returns {List[Object]} the normalized data, serialized into JSON
+ * Normalizes the Activity Data from Gym/Library APIs
+ * @param {List[Object]} activityData the activity data to be normalized
+ * @returns the normalized data
  */
-export default function normalizeData(data, name=null, facility=null, lastUpdated=null, count=null, capacity=null) {
-
+function normalizeActivityData(activityData) {
     let normalized = []
     let id = 0
 
-    for (let obj of data) {
+    for (let obj of activityData) {
 
         const normObj = {}
         normObj.id = id++
 
         /* Data came from gyms API */
         if (Object.hasOwn(obj, 'FacilityId')) {
-            normObj.name = name ? name : obj.LocationName
-            normObj.facility = facility ? facility : obj.FacilityName
+            normObj.name = obj.LocationName
+            normObj.facility = obj.FacilityName
             normObj.type = 'Gym'
-            normObj.lastUpdated = lastUpdated ? lastUpdated : obj.LastUpdatedDateAndTime
-            normObj.count = count ? count : obj.LastCount
-            normObj.capacity = capacity ? capacity : obj.TotalCapacity
+            normObj.lastUpdated = obj.LastUpdatedDateAndTime
+            normObj.count = obj.LastCount
+            normObj.capacity = obj.TotalCapacity
         }
 
         /* Data came from College Library API */
@@ -43,17 +37,122 @@ export default function normalizeData(data, name=null, facility=null, lastUpdate
                 break
                 default: normObj.name = 'College Library, Unknown Location'
             }
-            normObj.facility = facility ? facility : 'College Library'
+            normObj.facility = 'College Library'
             normObj.type = 'Library'
-            normObj.lastUpdated = lastUpdated ? lastUpdated : new Date().toISOString()
-            normObj.count = count ? count : obj.people
-            normObj.capacity = capacity ? capacity : obj.capacity
+            normObj.lastUpdated = new Date().toISOString()
+            normObj.count = obj.people
+            normObj.capacity = obj.capacity
         }
+
+        /* Stores EMS Cloud events for that particular location */
+        normObj.events = []
 
         normalized.push(normObj)
 
     }
+    
+    return normalized
+}
 
-    return JSON.stringify(normalized)
+/**
+ * 
+ * @param {Map(string : Location)} locations A hashmap containing the activityData Location's names to the Locations itself
+ * @param {List[Object]} emsData EMS Cloud data, which will be added to locations
+ * @returns {List[Location]} locations after the EMS Cloud data is added to each associated Location
+ */
+function normalizeEMSData(locations, emsData) {
+
+    for (let event of emsData) {
+
+        // console.log(event)
+
+        /* Extract only the relevant parts of the original event */
+        const newEvent = {name : event.EventName, start : event.EventStart, end : event.EventEnd}
+
+        /* If the event occurs in a pre-existing Location, add its event name, start time, and end time to Location.events */
+        /* Switch statement is necessary as EMS Cloud room names do not line up with Activity Data room names, even when referencing the same room */
+        switch (event.Room) {
+
+            case ('Diving Well') :
+            case ('Aquatic Center Dryland Training') : locations.get('Soderholm Family Aquatic Center').events.push(newEvent); break
+
+            case ('Level 1 Fitness') : locations.get('Level 1 Fitness').events.push(newEvent); break
+            case ('Level 2 Fitness') : locations.get('Level 2 Fitness').events.push(newEvent); break
+            case ('Level 3 Fitness') : locations.get('Level 3 Fitness').events.push(newEvent); break
+            case ('Level 4 Fitness') : locations.get('Level 4 Fitness').events.push(newEvent); break
+            case ('Courts 1 - 2') : locations.get('Courts 1&2').events.push(newEvent); break
+            case ('Courts 3 - 4') : locations.get('Courts 3&4').events.push(newEvent); break
+            case ('Courts 5 - 8') : locations.get('Courts 5-8').events.push(newEvent); break
+            case ('Simulator 1') :
+            case ('Simulator 2') :
+            case ('Simulator 3') : locations.get('Skybox Suites').events.push(newEvent); break
+            case ('Esports Room') : locations.get('Esports Room').events.push(newEvent); break
+            case ('The Rooftop') : locations.get('The Point').events.push(newEvent); break
+            case ('Willow Deck') : locations.get('Willow Room').events.push(newEvent); break
+            case ('Sub-Zero Ice Rink') : locations.get('Sub Zero Ice Center').events.push(newEvent); break
+            case ('Cove Pool') : locations.get('Cove Pool').events.push(newEvent); break
+            case ('Mt Mendota') : locations.get('Mount Mendota').events.push(newEvent); break
+            case ('Track') : locations.get('Bakke Track').events.push(newEvent); break
+            case ('Orbit') : locations.get('Orbit').events.push(newEvent); break
+
+            case ('College 2191B Study Room') : locations.get('College Library 2nd Floor').events.push(newEvent); break
+            case ('College 2251 Study Room') : locations.get('College Library 2rd Floor Computer Lab').events.push(newEvent); break
+            case ('College 3191B Study Room') : locations.get('College Library 3rd Floor').events.push(newEvent); break
+            case ('College 3251 Study Room') : locations.get('College Library 3rd Floor Computer Lab').events.push(newEvent); break
+
+
+            /* If not, create a new Location, add its event name, start time, and end time to Location.events */
+            default: locations.set(event.Room, {
+                name : event.Room, 
+                facility : event.Building, 
+                type : 'Campus Building', 
+                lastUpdated : new Date().toISOString(), 
+                count : 0, 
+                capacity : 0, 
+                events : [newEvent]
+            })
+            //Nick Classroom
+            //Bakke Locker Room A - D
+            //Bakke Breakout Room 2143
+            //
+        }
+
+    }
+
+    return Array.from(locations.values())
 
 }
+
+/**
+ * Normalizes and combines data from different APIs to create Objects that can be rendered into Location components
+ * @param {List[Object]} activityData Gym/Library data
+ * @param {List[Object]} emsData EMS Cloud data
+ * @returns {List[Object]} the normalized and combined data, serialized into JSON
+ */
+function normalizeData(activityData, emsData) {
+
+    /* Normalize Activity data */
+    const normalized = normalizeActivityData(activityData)
+
+    /* Map Location.name -> Location object in a hashmap */
+    const normalizedHash = new Map(normalized.map(location => [location.name, location]))
+
+    /* Parse through EMS Cloud data and map facility/room to location.name */
+    /* Add fields to Location to include EMS Cloud data activities and their start/end times */
+    const locations = normalizeEMSData(normalizedHash, emsData)
+
+    console.log(locations)
+
+    return JSON.stringify(locations)
+
+}
+
+    /*
+    1. Normalize Activity data
+    2. Get mapping of location.name -> Location in a hashmap
+    3. Parse through EMS Cloud data, and map facility + room to a location.name
+    4. Add fields to Location to include EMS Cloud data activities and their start/end times
+    5. Return the values of the hashmap
+    */
+
+export default normalizeData
