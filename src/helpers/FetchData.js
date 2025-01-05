@@ -34,8 +34,8 @@ export const getClibData = async () => {
     const body = JSON.stringify({
         filterData: {
           filters: [
-            {filterName: "StartDate", value: "2025-01-03 00:00:00", displayValue: "", filterType: 3},  
-            {filterName: "EndDate", value: "2025-01-04 00:00:00", filterType: 3, displayValue: ""}, 
+            {filterName: "StartDate", value: "2025-01-21 00:00:00", displayValue: "", filterType: 3},  
+            {filterName: "EndDate", value: "2025-01-22 00:00:00", displayValue: "", filterType: 3}, 
             {filterName: "TimeZone", value: "64", displayValue: "", filterType: 2}, 
             {filterName: "RollupEventsToReservation", value: "false", displayValue: ""}, 
             {filterName: "ResultType", value: "Daily", displayValue: ""}

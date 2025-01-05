@@ -24,7 +24,7 @@ const Location = (props) => {
             {props.events.length === 0 ? <></> : <Card.Text> Upcoming Events: </Card.Text>}
             {props.events.length === 0 ? <Card.Text>No upcoming events</Card.Text> : props.events.map(event => (
             <Card.Text key={idCounter++}>
-                {event.name} <br />
+                {event.name} - {event.room}<br />
                 {event.start} to {event.end}
             </Card.Text>))}
             

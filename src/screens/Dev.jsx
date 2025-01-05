@@ -7,7 +7,7 @@ import '../styles/screens.css'
 import NavBar from '../components/NavBar'
 import EMSCard from '../components/EMSCard'
 
-import { getEMSData } from '../helpers/fetchData'
+import { getEMSData, getGymData } from '../helpers/fetchData'
 
 function Dev(props) {
 
@@ -16,8 +16,9 @@ function Dev(props) {
     useEffect(() => {
         const loadData = async () => {
             let EMSData = await getEMSData()
+            let gymData = await getGymData()
             EMSData = JSON.parse(EMSData)
-            console.log(EMSData)
+            console.log(gymData.map(x => x.LocationName))
             setData(EMSData)
         }
         loadData()

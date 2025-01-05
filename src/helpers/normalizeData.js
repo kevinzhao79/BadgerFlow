@@ -72,6 +72,7 @@ function normalizeEMSData(locations, emsData) {
         /* Extract only the relevant parts of the original event */
         const newEvent = {
             name : event.EventName, 
+            room : event.Room, 
             start : formatHHMM(event.EventStart), 
             end : formatHHMM(event.EventEnd), 
         }
@@ -80,13 +81,18 @@ function normalizeEMSData(locations, emsData) {
         /* Switch statement is necessary as EMS Cloud room names do not line up with Activity Data room names, even when referencing the same room */
         switch (event.Room) {
 
+            case ('Power House') : locations.get('Nick Power House').events.push(newEvent); break
+            case ('Sprint Ramp') : 
+            case ('Functional Training') :
+            case ('Courts 1 - 2') : locations.get('Nick Courts 1 & 2').events.push(newEvent); break
+            case ('Courts 3 - 6') : locations.get('Nick Courts 3-6').events.push(newEvent); break
+            case ('Courts 7 - 8') : locations.get('Nick Courts 7 & 8').events.push(newEvent); break
+            case ('Track') : locations.get('Nick Track').events.push(newEvent); locations.get('Bakke Track').events.push(newEvent); break
+            case ('Racquetball Court 1') : locations.get('Nick Racquetball Court 1').events.push(newEvent); break
+            case ('Racquetball Court 2') : locations.get('Nick Racquetball Court 2').events.push(newEvent); break
             case ('Diving Well') :
             case ('Aquatic Center Dryland Training') : locations.get('Soderholm Family Aquatic Center').events.push(newEvent); break
 
-            case ('Level 1 Fitness') : locations.get('Level 1 Fitness').events.push(newEvent); break
-            case ('Level 2 Fitness') : locations.get('Level 2 Fitness').events.push(newEvent); break
-            case ('Level 3 Fitness') : locations.get('Level 3 Fitness').events.push(newEvent); break
-            case ('Level 4 Fitness') : locations.get('Level 4 Fitness').events.push(newEvent); break
             case ('Courts 1 - 2') : locations.get('Courts 1&2').events.push(newEvent); break
             case ('Courts 3 - 4') : locations.get('Courts 3&4').events.push(newEvent); break
             case ('Courts 5 - 8') : locations.get('Courts 5-8').events.push(newEvent); break
@@ -97,28 +103,80 @@ function normalizeEMSData(locations, emsData) {
             case ('The Rooftop') : locations.get('The Point').events.push(newEvent); break
             case ('Willow Deck') : locations.get('Willow Room').events.push(newEvent); break
             case ('Sub-Zero Ice Rink') : locations.get('Sub Zero Ice Center').events.push(newEvent); break
+            case ('Pool - 25yd Lane 1') : 
+            case ('Pool - 25yd Lane 2') : 
+            case ('Pool - 25yd Lane 3') : 
+            case ('Pool - 25yd Lane 4') : 
+            case ('Pool - 25yd Lane 5') : 
+            case ('Pool - 25yd Lane 6') : 
+            case ('Pool - 25yd Lane 7') : 
+            case ('Pool - 25yd Lane 8') : 
             case ('Cove Pool') : locations.get('Cove Pool').events.push(newEvent); break
             case ('Mt Mendota') : locations.get('Mount Mendota').events.push(newEvent); break
-            case ('Track') : locations.get('Bakke Track').events.push(newEvent); break
             case ('Orbit') : locations.get('Orbit').events.push(newEvent); break
+
+            case ('Level 1 Fitness') :
+                if (event.Building === 'BAKKE') { locations.get('Level 1 Fitness').events.push(newEvent); break }
+                else if (event.Building === 'NICK') { locations.get('Nick Level 1 Fitness').events.push(newEvent); break }
+            case ('Level 2 Fitness') :
+                if (event.Building === 'BAKKE') { locations.get('Level 2 Fitness').events.push(newEvent); break }
+                else if (event.Building === 'NICK') { locations.get('Nick Level 2 Fitness').events.push(newEvent); break }
+            case ('Level 3 Fitness') : 
+            if (event.Building === 'BAKKE') { locations.get('Level 3 Fitness').events.push(newEvent); break }
+            else if (event.Building === 'NICK') { locations.get('Nick Level 3 Fitness').events.push(newEvent); break }
+            case ('Level 3 Fitness - North') : { locations.get('Nick Level 3 Fitness').events.push(newEvent); break }
+            case ('Level 3 Fitness - South') : { locations.get('Nick Level 3 Fitness').events.push(newEvent); break }
+            case ('Level 4 Fitness') : { locations.get('Level 4 Fitness').events.push(newEvent); break }
+
+            case ('Court 1') :
+                if (event.Building === 'BAKKE') { locations.get('Courts 1&2').events.push(newEvent); break }
+                else if (event.Building === 'NICK') { locations.get('Nick Courts 1 & 2').events.push(newEvent); break }
+            case ('Court 2') :
+                if (event.Building === 'BAKKE') { locations.get('Courts 1&2').events.push(newEvent); break }
+                else if (event.Building === 'NICK') { locations.get('Nick Courts 1 & 2').events.push(newEvent); break }
+            case ('Court 3') :
+                if (event.Building === 'BAKKE') { locations.get('Courts 3&4').events.push(newEvent); break }
+                else if (event.Building === 'NICK') { locations.get('Nick Courts 3 - 6').events.push(newEvent); break }
+            case ('Court 4') :
+                if (event.Building === 'BAKKE') { locations.get('Courts 3&4').events.push(newEvent); break }
+                else if (event.Building === 'NICK') { locations.get('Nick Courts 3 - 6').events.push(newEvent); break }
+            case ('Court 5') :
+                if (event.Building === 'BAKKE') { locations.get('Courts 5-8').events.push(newEvent); break }
+                else if (event.Building === 'NICK') { locations.get('Nick Courts 3 - 6').events.push(newEvent); break }
+            case ('Court 6') :
+                if (event.Building === 'BAKKE') { locations.get('Courts 5-8').events.push(newEvent); break }
+                else if (event.Building === 'NICK') { locations.get('Nick Courts 3 - 6').events.push(newEvent); break }
+            case ('Court 7') :
+                if (event.Building === 'BAKKE') { locations.get('Courts 5-8').events.push(newEvent); break }
+                else if (event.Building === 'NICK') { locations.get('Nick Courts 7 & 8').events.push(newEvent); break }
+            case ('Court 8') :
+                if (event.Building === 'BAKKE') { locations.get('Courts 5-8').events.push(newEvent); break }
+                else if (event.Building === 'NICK') { locations.get('Nick Courts 7 & 8').events.push(newEvent); break }
 
             case ('College 2191B Study Room') : locations.get('College Library 2nd Floor').events.push(newEvent); break
             case ('College 2251 Study Room') : locations.get('College Library 2rd Floor Computer Lab').events.push(newEvent); break
             case ('College 3191B Study Room') : locations.get('College Library 3rd Floor').events.push(newEvent); break
             case ('College 3251 Study Room') : locations.get('College Library 3rd Floor Computer Lab').events.push(newEvent); break
 
-
             /* If not, create a new Location, add its event name, start time, and end time to Location.events */
-            default: locations.set(event.Room, {
-                id : idCounter++, 
-                name : event.Room, 
-                facility : event.Building, 
-                type : 'Campus Building', 
-                lastUpdated : new Date().toISOString(), 
-                count : 0, 
-                capacity : 0, 
-                events : [newEvent]
-            })
+            default: 
+
+                if (locations.get(event.Room) !== undefined) {
+                    console.log(locations.get(event.Room))
+                    locations.get(event.Room).events.push(newEvent)
+                }
+                else {
+                    locations.set(event.Room, {
+                        id : idCounter++, 
+                        name : event.Room, 
+                        facility : event.Building, 
+                        type : 'Campus Building', 
+                        lastUpdated : new Date().toISOString(), 
+                        count : 0, 
+                        capacity : 0, 
+                        events : [newEvent]
+                    })
+                }
 
         }
 
