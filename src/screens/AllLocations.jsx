@@ -1,14 +1,14 @@
 /* AllLocations.jsx */
 
 import { useState, useEffect } from 'react'
-import { Container, Row} from 'react-bootstrap'
+import { Container, Row, Spinner} from 'react-bootstrap'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import NavBar from '../components/NavBar'
 import Locations from '../components/Locations'
 
-import { getGymData, getClibData, getEMSData } from '../helpers/fetchData'
+import { getGymData, getClibData, getEMSData } from '../helpers/FetchData'
 
 function AllLocations(props) {
 
@@ -31,7 +31,15 @@ function AllLocations(props) {
             <Row>
                 <NavBar />
             </Row>
-            {data.length === 0 ? <p> Still loading! </p> : <Locations data={data} emsData={emsData}/>}
+            {data.length === 0 ? (
+                <Row className="justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </Row>
+            ) : (
+                <Locations data={data} emsData={emsData} />
+            )}
         </Container>
     )
 }
