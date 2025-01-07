@@ -1,7 +1,9 @@
 /* Gyms.jsx */
 
 import { useState, useEffect } from 'react'
-import { Container, Row, Spinner} from 'react-bootstrap'
+import { Container, Row, Spinner } from 'react-bootstrap'
+import { motion } from 'framer-motion';
+import { fadeUp } from '../helpers/Animations'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -34,7 +36,13 @@ function Gyms(props) {
                     </Spinner>
                 </Row>
             ) : (
-                <Locations data={data}/>
+                <motion.div
+                    initial="initial"
+                    animate="animate"
+                    variants={fadeUp}
+                >
+                    <Locations data={data} emsData={emsData} />
+                </motion.div>
             )}
     </Container>
     )

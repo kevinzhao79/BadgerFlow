@@ -12,8 +12,10 @@ const Location = (props) => {
 
     let idCounter = 0
 
+    const isOutdated = timeDiff === "Over 1 Day"
+
     return (
-    <Card>
+    <Card className={isOutdated ? "grey-out" : ""}>
         <Card.Title>{props.name}</Card.Title>
         <Card.Body>
             <Card.Text>
