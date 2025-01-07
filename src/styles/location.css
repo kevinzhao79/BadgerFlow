@@ -23,3 +23,10 @@
     font-size: var(--secondary-size);
     font-family: var(--secondary-font);
 }
+
+.grey-out {
+    background-color: #d6d8db;
+    /* color: #6c757d; */
+    opacity: 0.9;
+    
+}

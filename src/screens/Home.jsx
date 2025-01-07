@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { Container, Row, Card} from 'react-bootstrap'
+import { Container, Row, Card } from 'react-bootstrap'
+
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../styles/screens.css'
