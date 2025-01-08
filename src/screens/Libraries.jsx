@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import NavBar from '../components/NavBar'
 import Locations from '../components/Locations'
 
-import { getClibData, getEMSData } from '../helpers/FetchData'
+import { getClibData, getEMSData, getGymData } from '../helpers/FetchData'
 
 function Libraries(props) {
 
@@ -20,8 +20,9 @@ function Libraries(props) {
     useEffect(() => {
         const loadData = async () => {
             const clibData = await getClibData()
+            const gymData = await getGymData()
             const EMSData = await getEMSData()
-            setData(clibData)
+            setData([...gymData, ...clibData])
             setEMSData(EMSData)
         }
         loadData()
@@ -44,7 +45,7 @@ function Libraries(props) {
                     animate="animate"
                     variants={fadeUp}
                 >
-                    <Locations data={data} emsData={emsData} />
+                    <Locations data={data} emsData={emsData} filter='library' />
                 </motion.div>
             )}
         </Container>

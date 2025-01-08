@@ -14,7 +14,7 @@ function NavBar(props) {
         navigate('/')
     }
 
-    function setAllLocations() {
+    function setAll() {
         navigate('/all')
     }
 
@@ -39,7 +39,7 @@ function NavBar(props) {
         <Row>
             <Col>
                 <Button onClick={setHome}> Home </Button>
-                <Button onClick={setAllLocations}> All </Button>
+                <Button onClick={setAll}> All </Button>
                 <Button onClick={setGyms}> Gyms </Button>
                 <Button onClick={setLibraries}> Libraries </Button>
                 <Button onClick={setOther}> Other </Button>

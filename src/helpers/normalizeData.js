@@ -57,6 +57,36 @@ function normalizeActivityData(activityData) {
 
 /**
  * 
+ * @param {Object} data the data to be turned into a Location
+ * @returns {Object} the Location
+ */
+function createLocation(data, event, id) {
+
+    const location = {}
+    location.id = id
+    location.name = data.Room
+    location.facility = data.Building
+    location.lastUpdated = new Date().toISOString()
+    location.count = 0
+    location.capacity = 0
+    location.events = [event]
+    
+    switch (data.Building) {
+        case ('NICK') : 
+        case ('BAKKE') : 
+        case ('NTS') : location.type = 'Gym'; break
+        case ('MEM') : 
+        case ('STEEN') : 
+        case ('COLL') : location.type = 'Library'; break
+        default: location.type = 'Other'; break
+    }
+
+    return location
+
+}
+
+/**
+ * 
  * @param {Map(string : Location)} locations A hashmap containing the activityData Location's names to the Locations itself
  * @param {List[Object]} emsData EMS Cloud data, which will be added to locations
  * @returns {List[Location]} locations after the EMS Cloud data is added to each associated Location
@@ -160,22 +190,12 @@ function normalizeEMSData(locations, emsData) {
 
             /* If not, create a new Location, add its event name, start time, and end time to Location.events */
             default: 
-
-                if (locations.get(event.Room) !== undefined) {
-                    console.log(locations.get(event.Room))
+                if (typeof locations.get(event.Room) === 'object') {
                     locations.get(event.Room).events.push(newEvent)
                 }
                 else {
-                    locations.set(event.Room, {
-                        id : idCounter++, 
-                        name : event.Room, 
-                        facility : event.Building, 
-                        type : 'Campus Building', 
-                        lastUpdated : new Date().toISOString(), 
-                        count : 0, 
-                        capacity : 0, 
-                        events : [newEvent]
-                    })
+                    const location = createLocation(event, newEvent, idCounter++)
+                    locations.set(location.name, location)
                 }
 
         }
@@ -215,6 +235,7 @@ function normalizeData(activityData, emsData) {
     /* Parse through EMS Cloud data and map facility/room to location.name */
     /* Add fields to Location to include EMS Cloud data activities and their start/end times */
     const locations = normalizeEMSData(normalizedHash, emsData)
+    console.log(locations.filter(location => location.type === 'Library'))
 
     removeDuplicateEvents(locations)
 

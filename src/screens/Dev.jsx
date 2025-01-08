@@ -15,10 +15,7 @@ function Dev(props) {
 
     useEffect(() => {
         const loadData = async () => {
-            let EMSData = await getEMSData()
-            let gymData = await getGymData()
-            EMSData = JSON.parse(EMSData)
-            console.log(gymData.map(x => x.LocationName))
+            const EMSData = await getEMSData()
             setData(EMSData)
         }
         loadData()

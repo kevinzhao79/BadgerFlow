@@ -20,7 +20,14 @@ import normalizeData from "../helpers/normalizeData"
  */
  const Locations = (props) => {
 
-    const normalized = normalizeData(props.data, props.emsData)
+    let normalized = normalizeData(props.data, props.emsData)
+    switch (props.filter) {
+        case ('all') : break
+        case ('gym') : {normalized = normalized.filter(location => location.type === 'Gym'); break}
+        case ('library') : {normalized = normalized.filter(location => location.type === 'Library'); break}
+        case ('other') : {normalized = normalized.filter(location => location.type === 'Other'); break}
+        default : alert('Warning: Filter not found.')
+    }
 
     return <Row className='location-container'>
         {normalized.map(location => (

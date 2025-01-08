@@ -1,4 +1,4 @@
-/* AllLocations.jsx */
+/* All.jsx */
 
 import { useState, useEffect } from 'react'
 import { Container, Row, Spinner } from 'react-bootstrap'
@@ -12,18 +12,18 @@ import Locations from '../components/Locations'
 
 import { getGymData, getClibData, getEMSData } from '../helpers/FetchData'
 
-function AllLocations(props) {
+function All(props) {
 
     const [data, setData] = useState([])
     const [emsData, setEMSData] = useState([])
 
     useEffect(() => {
         const loadData = async () => {
-            const gymData = await getGymData()
             const clibData = await getClibData()
+            const gymData = await getGymData()
             const EMSData = await getEMSData()
             setData([...gymData, ...clibData])
-            setEMSData(JSON.parse(EMSData))
+            setEMSData(EMSData)
         }
         loadData()
     }, [])
@@ -45,11 +45,11 @@ function AllLocations(props) {
                     animate="animate"
                     variants={fadeUp}
                 >
-                    <Locations data={data} emsData={emsData} />
+                    <Locations data={data} emsData={emsData} filter='all' />
                 </motion.div>
             )}
         </Container>
     )
 }
 
-export default AllLocations
+export default All

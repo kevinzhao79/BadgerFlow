@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router'
 import './app.css'
 
 import Home from './screens/Home'
-import AllLocations from './screens/AllLocations'
+import All from './screens/All'
 import Gyms from './screens/Gyms'
 import Libraries from './screens/Libraries'
 import PageNotFound from './screens/PageNotFound'
@@ -18,7 +18,7 @@ function App() {
     <BrowserRouter>
         <Routes>
         <Route index element={<Home/>} />
-        <Route path='/all' element={<AllLocations />} />
+        <Route path='/all' element={<All />} />
         <Route path='/gyms' element={<Gyms/>} />
         <Route path='/libraries' element={<Libraries />} />
         <Route path='/other' element={<Other />} />

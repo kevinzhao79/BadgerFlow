@@ -1,24 +1,26 @@
 import { useEffect, useState } from 'react'
-import { Container, Row, Col, Card, Spinner} from 'react-bootstrap'
+import { Container, Row, Card, Spinner} from 'react-bootstrap'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../styles/screens.css'
 
 import NavBar from '../components/NavBar'
-import EMSCard from '../components/EMSCard'
 
-import { getEMSData } from '../helpers/FetchData'
+import { getEMSData, getClibData, getGymData } from '../helpers/FetchData'
+import Locations from '../components/Locations'
 
 function Other(props) {
 
     const [data, setData] = useState([])
+    const [emsData, setEMSData] = useState([])
 
     useEffect(() => {
         const loadData = async () => {
-            let EMSData = await getEMSData()
-            EMSData = JSON.parse(EMSData)
-            setData(EMSData.DailyBookingResults)
-            console.log(EMSData.DailyBookingResults)
+            const clibData = await getClibData()
+            const gymData = await getGymData()
+            const EMSData = await getEMSData()
+            setData([...gymData, ...clibData])
+            setEMSData(EMSData)
         }
         loadData()
     }, [])
@@ -39,12 +41,8 @@ function Other(props) {
                         <span className="visually-hidden">Loading...</span>
                     </Spinner>
                 </Row>
-            ) : (data.map(reservation => (
-            <Col sm={12} md={6} lg={4} key={reservation.Id}>
-                <EMSCard {...reservation}/>
-            </Col>
-            )))
-                }
+            ) : <Locations data={data} emsData={emsData} filter='other' />
+            }
         </Row>
     </Container>
     )
