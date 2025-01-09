@@ -28,5 +28,28 @@
     background-color: #d6d8db;
     /* color: #6c757d; */
     opacity: 0.9;
-    
+}
+
+.location-min-height {
+    min-height: 200px;
+}
+
+.expand-button{
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: var(--button-radius);
+    padding: var(--button-padding);
+    margin: var(--button-margin);
+    font-size: var(--button-size);
+    font-family: var(--secondary-font);
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
 }

@@ -29,13 +29,16 @@ import normalizeData from "../helpers/normalizeData"
         default : alert('Warning: Filter not found.')
     }
 
-    return <Row className='location-container'>
-        {normalized.map(location => (
-            <Col sm={12} md={6} lg={4} key={location.id}>
-                <Location {...location}/>
-            </Col>)
-        )}
-    </Row>
+     return <div>
+         <Row className='location-container g-4'>
+             {normalized.map(location => (
+                 <Col sm={12} md={6} lg={4} key={location.id} className="d-flex">
+                     <Location {...location} />
+                 </Col>)
+             )}
+         </Row>
+         
+    </div>
 
 }
 
