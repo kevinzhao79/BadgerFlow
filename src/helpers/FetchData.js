@@ -32,7 +32,10 @@ export const getClibData = async () => {
  * @returns A list of events happening today
  */
  export const getEMSData = async (date) => {
-    const nextDate = new Date(date.getDate() + 1)
+    const oneDay = 24 * 60 * 60 * 1000
+    const nextDate = new Date(date.getTime() + oneDay)
+    console.log("today", `${date.toISOString().slice(0, 10)} 00:00:00`)
+    console.log("tomorrow", `${nextDate.toISOString().slice(0, 10)} 00:00:00`)
     const body = JSON.stringify({
         filterData: {
           filters: [
