@@ -28,14 +28,16 @@ export const getClibData = async () => {
 
 /**
  * Grabs the data from EMS Cloud Services and normalizes it
+ * @param {Date} date The start date of when data should be added
  * @returns A list of events happening today
  */
- export const getEMSData = async () => {
+ export const getEMSData = async (date) => {
+    const nextDate = new Date(date.getDate() + 1)
     const body = JSON.stringify({
         filterData: {
           filters: [
-            {filterName: "StartDate", value: "2025-01-21 00:00:00", displayValue: "", filterType: 3},  
-            {filterName: "EndDate", value: "2025-01-22 00:00:00", displayValue: "", filterType: 3}, 
+            {filterName: "StartDate", value: `${date.toISOString().slice(0, 10)} 00:00:00`, displayValue: "", filterType: 3},  
+            {filterName: "EndDate", value: `${nextDate.toISOString().slice(0, 10)} 00:00:00`, displayValue: "", filterType: 3}, 
             {filterName: "TimeZone", value: "64", displayValue: "", filterType: 2}, 
             {filterName: "RollupEventsToReservation", value: "false", displayValue: ""}, 
             {filterName: "ResultType", value: "Daily", displayValue: ""}

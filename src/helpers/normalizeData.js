@@ -235,7 +235,6 @@ function normalizeData(activityData, emsData) {
     /* Parse through EMS Cloud data and map facility/room to location.name */
     /* Add fields to Location to include EMS Cloud data activities and their start/end times */
     const locations = normalizeEMSData(normalizedHash, emsData)
-    console.log(locations.filter(location => location.type === 'Library'))
 
     removeDuplicateEvents(locations)
 
