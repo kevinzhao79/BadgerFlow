@@ -69,7 +69,7 @@ const Location = (props) => {
                                 <AnimatePresence initial={false}>
                                     {props.events.slice(0, isExpanded ? props.events.length : maxVisibleEvents).map((event) => (
                                         <motion.div
-                                            key={`${event.name}-${event.room}-${event.start}`}
+                                            key={`${event.name}-${event.room}-${event.start}-${event.end}`}
                                             initial={{ opacity: 0, height: 0 }}
                                             animate={{ opacity: 1, height: 'auto' }}
                                             exit={{ opacity: 0, height: 0 }}

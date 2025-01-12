@@ -32,7 +32,7 @@ function All(props) {
     }, [date])
 
     useEffect(() => {
-        console.log(date)
+        // console.log(date)
     }, [date])
 
     return (

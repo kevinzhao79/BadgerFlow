@@ -34,13 +34,11 @@ export const getClibData = async () => {
  export const getEMSData = async (date) => {
     const oneDay = 24 * 60 * 60 * 1000
     const nextDate = new Date(date.getTime() + oneDay)
-    console.log("today", `${date.toISOString().slice(0, 10)} 00:00:00`)
-    console.log("tomorrow", `${nextDate.toISOString().slice(0, 10)} 00:00:00`)
     const body = JSON.stringify({
         filterData: {
           filters: [
             {filterName: "StartDate", value: `${date.toISOString().slice(0, 10)} 00:00:00`, displayValue: "", filterType: 3},  
-            {filterName: "EndDate", value: `${nextDate.toISOString().slice(0, 10)} 00:00:00`, displayValue: "", filterType: 3}, 
+            {filterName: "EndDate", value: `${date.toISOString().slice(0, 10)} 23:59:59`, displayValue: "", filterType: 3}, 
             {filterName: "TimeZone", value: "64", displayValue: "", filterType: 2}, 
             {filterName: "RollupEventsToReservation", value: "false", displayValue: ""}, 
             {filterName: "ResultType", value: "Daily", displayValue: ""}
