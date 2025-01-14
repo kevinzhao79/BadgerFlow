@@ -26,8 +26,8 @@ function NavBar(props) {
         navigate('/libraries')
     }
 
-    function setDev() {
-        navigate('/dev')
+    function setLogin() {
+        navigate('/login')
     }
 
     function setOther() {
@@ -48,7 +48,7 @@ function NavBar(props) {
                 <h1> BadgerFlow </h1>
             </Col>
             <Col>
-                <Button onClick={setDev}> Dev </Button>
+                <Button onClick={setLogin}> Login </Button>
                 <Button> Support Me! </Button>
             </Col>
         </Row>

@@ -10,7 +10,7 @@ import Gyms from './screens/Gyms'
 import Libraries from './screens/Libraries'
 import PageNotFound from './screens/PageNotFound'
 import Other from './screens/Other'
-import Dev from './screens/Dev'
+import Login from './screens/Login'
 
 function App() {
 
@@ -23,7 +23,7 @@ function App() {
         <Route path='/libraries' element={<Libraries />} />
         <Route path='/other' element={<Other />} />
         
-        <Route path='/dev' element={<Dev />} />
+        <Route path='/login' element={<Login />} />
         <Route path="*" element={<PageNotFound />} />
         </Routes>
     </BrowserRouter>
