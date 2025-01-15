@@ -50,7 +50,7 @@ const Location = (props) => {
                             <ProgressBar
                                 now={capacityPercentage}
                                 variant={progressVariant}
-                                style={{ height: '100%', borderRadius: '5px' }}
+                                style={{ height: '100%', borderRadius: '50px' }}
                                 aria-label={`Capacity: ${props.count} out of ${props.capacity}`}
                             />
                             <div className="progress-label">

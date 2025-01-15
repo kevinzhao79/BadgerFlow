@@ -1,45 +1,110 @@
 /* Locations.jsx */
+import { Row, Col, Form, Dropdown } from "react-bootstrap";
+import { useState, useMemo } from 'react';
 
-import { Row, Col } from "react-bootstrap"
+import Location from "./Location";
+import '../styles/locations.css';
+import normalizeData from "../helpers/normalizeData";
 
-import Location from "./Location"
+const Locations = (props) => {
+  const [query, setQuery] = useState('');
+  // Initialize selectedFilters with all available filter types.
+  const [selectedFilters, setSelectedFilters] = useState(["Gym", "Library", "Other"]);
 
-import '../styles/locations.css'
+  const normalized = useMemo(() => {
+    return normalizeData(props.data, props.emsData);
+  }, [props.data, props.emsData]);
 
-import normalizeData from "../helpers/normalizeData"
-
-/**
- * Creates a list of Location objects based on the normalized data
- * @param {List[Object]} data the normalized data
- * @param {string} name the name of the region/location
- * @param {string} facility the name of the facility that contains the region/location
- * @param {string} lastUpdated when this data was logged, in ISO 8601 format
- * @param {int} count how many people are at the region/location
- * @param {int} capacity how many people max can fit in the region/location
- * @returns {Component} a component containing all of the Location components from each region
- */
- const Locations = (props) => {
-
-    let normalized = normalizeData(props.data, props.emsData)
-    switch (props.filter) {
-        case ('all') : break
-        case ('gym') : {normalized = normalized.filter(location => location.type === 'Gym'); break}
-        case ('library') : {normalized = normalized.filter(location => location.type === 'Library'); break}
-        case ('other') : {normalized = normalized.filter(location => location.type === 'Other'); break}
-        default : alert('Warning: Filter not found.')
+  const filteredData = useMemo(() => {
+    let data = normalized;
+    if (query.trim() !== "") {
+      data = data.filter(location =>
+        location.name.toLowerCase().includes(query.toLowerCase()) ||
+        location.facility.toLowerCase().includes(query.toLowerCase()) ||
+        location.type.toLowerCase().includes(query.toLowerCase()) ||
+        (location.events &&
+          location.events.some(event =>
+            event.name.toLowerCase().includes(query.toLowerCase())
+          ))
+      );
     }
+    // Filter by selected filters.
+    data = data.filter(location => selectedFilters.includes(location.type));
+    return data;
+  }, [normalized, query, selectedFilters]);
 
-     return <div>
-         <Row className='location-container g-4'>
-             {normalized.map(location => (
-                 <Col sm={12} md={6} lg={4} key={location.id} className="d-flex">
-                     <Location {...location} />
-                 </Col>)
-             )}
-         </Row>
-         
+  const handleFilterChange = (filterValue) => {
+    setSelectedFilters(prev =>
+      prev.includes(filterValue)
+        ? prev.filter(f => f !== filterValue)
+        : [...prev, filterValue]
+    );
+  };
+
+  return (
+    <div>
+      {/* Container for search and filter controls */}
+      <div className="search-filter-container mx-auto mb-3">
+        <Row className="align-items-center no-gutters">
+          <Col xs={8} md={9} className="pr-1">
+            <Form.Group controlId="searchLocations">
+              <Form.Control
+                type="text"
+                placeholder="Search locations, facilities, or events..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+          <Col xs={4} md={3} className="pl-1 text-end">
+            <Dropdown>
+              <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                Filters
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Form.Check
+                  type="checkbox"
+                  label="Gym"
+                  id="filter-gym"
+                  checked={selectedFilters.includes("Gym")}
+                  onChange={() => handleFilterChange("Gym")}
+                  className="mx-3 my-1"
+                />
+                <Form.Check
+                  type="checkbox"
+                  label="Library"
+                  id="filter-library"
+                  checked={selectedFilters.includes("Library")}
+                  onChange={() => handleFilterChange("Library")}
+                  className="mx-3 my-1"
+                />
+                <Form.Check
+                  type="checkbox"
+                  label="Other"
+                  id="filter-other"
+                  checked={selectedFilters.includes("Other")}
+                  onChange={() => handleFilterChange("Other")}
+                  className="mx-3 my-1"
+                />
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
+        </Row>
+      </div>
+
+      {filteredData.length === 0 ? (
+        <p>No results were found.</p>
+      ) : (
+        <Row className="location-container g-4">
+          {filteredData.map(location => (
+            <Col sm={12} md={6} lg={4} key={location.id} className="d-flex">
+              <Location {...location} />
+            </Col>
+          ))}
+        </Row>
+      )}
     </div>
+  );
+};
 
-}
-
-export default Locations
+export default Locations;
