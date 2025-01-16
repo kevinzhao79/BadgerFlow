@@ -8,6 +8,7 @@ import DatePicker from "react-datepicker";
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "react-datepicker/dist/react-datepicker.css";
+import "../styles/custom_datepicker.css";
 
 import NavBar from '../components/NavBar'
 import Locations from '../components/Locations'
