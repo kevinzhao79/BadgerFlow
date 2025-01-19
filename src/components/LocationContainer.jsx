@@ -6,7 +6,7 @@ import Location from "./Location";
 import '../styles/locations.css';
 import normalizeData from "../helpers/normalizeData";
 
-const Locations = (props) => {
+const LocationContainer = (props) => {
   const [query, setQuery] = useState('');
   // Initialize selectedFilters with all available filter types.
   const [selectedFilters, setSelectedFilters] = useState(["Gym", "Library", "Other"]);
@@ -22,24 +22,24 @@ const Locations = (props) => {
         location.name.toLowerCase().includes(query.toLowerCase()) ||
         location.facility.toLowerCase().includes(query.toLowerCase()) ||
         location.type.toLowerCase().includes(query.toLowerCase()) ||
-        (location.events &&
+        (Object.keys(location).includes('events') &&
           location.events.some(event =>
             event.name.toLowerCase().includes(query.toLowerCase())
           ))
       );
     }
     // Filter by selected filters.
-    data = data.filter(location => selectedFilters.includes(location.type));
-    return data;
-  }, [normalized, query, selectedFilters]);
+    data = data.filter(location => selectedFilters.includes(location.type))
+    return data
+  }, [normalized, query, selectedFilters])
 
   const handleFilterChange = (filterValue) => {
     setSelectedFilters(prev =>
       prev.includes(filterValue)
         ? prev.filter(f => f !== filterValue)
         : [...prev, filterValue]
-    );
-  };
+    )
+  }
 
   return (
     <div>
@@ -104,7 +104,7 @@ const Locations = (props) => {
         </Row>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Locations;
+export default LocationContainer

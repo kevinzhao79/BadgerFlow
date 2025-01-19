@@ -45,11 +45,8 @@ export const getClibData = async () => {
           ],
         },
       })
-      const headers = {'headers' : {
-        'Content-Type' : 'application/json'
-      }}
-
-    const resp = await axios.post('http://localhost:3000/api/browse-events', body, headers)
+    const headers = {'headers' : { 'Content-Type' : 'application/json' }}
+    const resp = await axios.post('http://localhost:3000/events', body, headers)
     const EMSData = resp.data.d
   
     function prettify(input) {

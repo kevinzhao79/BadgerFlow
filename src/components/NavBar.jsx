@@ -8,30 +8,27 @@ import '../styles/navbar.css'
 
 function NavBar(props) {
 
+    const loggedIn = localStorage.getItem('loggedIn')
     const navigate = useNavigate()
 
     function setHome() {
         navigate('/')
     }
 
-    function setAll() {
-        navigate('/all')
+    function setLocations() {
+        navigate('/locations')
     }
 
-    function setGyms() {
-        navigate('/gyms')
-    }
-
-    function setLibraries() {
-        navigate('/libraries')
+    function setDashboard() {
+        navigate('/dashboard')
     }
 
     function setLogin() {
         navigate('/login')
     }
 
-    function setOther() {
-        navigate('/other')
+    function setLogout() {
+        navigate('/logout')
     }
 
     return (
@@ -39,16 +36,14 @@ function NavBar(props) {
         <Row>
             <Col>
                 <Button onClick={setHome}> Home </Button>
-                <Button onClick={setAll}> All </Button>
-                <Button onClick={setGyms}> Gyms </Button>
-                <Button onClick={setLibraries}> Libraries </Button>
-                <Button onClick={setOther}> Other </Button>
+                <Button onClick={setLocations}> Locations </Button>
+                <Button onClick={setDashboard}> Dashboard </Button>
             </Col>
             <Col>
                 <h1> BadgerFlow </h1>
             </Col>
             <Col>
-                <Button onClick={setLogin}> Login </Button>
+                {loggedIn ? <Button onClick={setLogout}> Logout </Button> : <Button onClick={setLogin}> Login </Button>}
                 <Button> Support Me! </Button>
             </Col>
         </Row>

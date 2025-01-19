@@ -11,13 +11,6 @@ import { getEMSData } from '../helpers/fetchData'
 
 function Home(props) {
 
-    useEffect(() => {
-        const loadData = async () => {
-            console.log(await getEMSData())
-        }
-        loadData()
-    }, [])
-
     return (
     <Container fluid>
         <Row>

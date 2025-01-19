@@ -1,4 +1,4 @@
-/* All.jsx */
+/* Locations.jsx */
 
 import { useState, useEffect } from 'react'
 import { Container, Row, Col, Spinner } from 'react-bootstrap'
@@ -11,11 +11,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../styles/custom_datepicker.css";
 
 import NavBar from '../components/NavBar'
-import Locations from '../components/Locations'
+import LocationContainer from '../components/LocationContainer'
 
 import { getGymData, getClibData, getEMSData } from '../helpers/FetchData'
 
-function All(props) {
+function Locations(props) {
 
     const [data, setData] = useState([])
     const [emsData, setEMSData] = useState([])
@@ -61,7 +61,7 @@ function All(props) {
                         animate="animate"
                         variants={fadeUp}
                     >
-                        <Locations data={data} emsData={emsData} filter='all' />
+                        <LocationContainer data={data} emsData={emsData} filter='all' />
                     </motion.div>
                 </>
             )}
@@ -69,4 +69,4 @@ function All(props) {
     )
 }
 
-export default All
+export default Locations

@@ -95,9 +95,13 @@ function normalizeEMSData(locations, emsData) {
 
     let idCounter = 1000
 
+    console.log(locations)
+
     for (let event of emsData) {
 
-        // console.log(event)
+        if (event.Building === 'NICK') {
+            console.log(event.EventName)
+        }
 
         /* Extract only the relevant parts of the original event */
         const newEvent = {
@@ -166,16 +170,16 @@ function normalizeEMSData(locations, emsData) {
                 else if (event.Building === 'NICK') { locations.get('Nick Courts 1 & 2').events.push(newEvent); break }
             case ('Court 3') :
                 if (event.Building === 'BAKKE') { locations.get('Courts 3&4').events.push(newEvent); break }
-                else if (event.Building === 'NICK') { locations.get('Nick Courts 3 - 6').events.push(newEvent); break }
+                else if (event.Building === 'NICK') { locations.get('Nick Courts 3-6').events.push(newEvent); break }
             case ('Court 4') :
                 if (event.Building === 'BAKKE') { locations.get('Courts 3&4').events.push(newEvent); break }
-                else if (event.Building === 'NICK') { locations.get('Nick Courts 3 - 6').events.push(newEvent); break }
+                else if (event.Building === 'NICK') { locations.get('Nick Courts 3-6').events.push(newEvent); break }
             case ('Court 5') :
                 if (event.Building === 'BAKKE') { locations.get('Courts 5-8').events.push(newEvent); break }
-                else if (event.Building === 'NICK') { locations.get('Nick Courts 3 - 6').events.push(newEvent); break }
+                else if (event.Building === 'NICK') { locations.get('Nick Courts 3-6').events.push(newEvent); break }
             case ('Court 6') :
                 if (event.Building === 'BAKKE') { locations.get('Courts 5-8').events.push(newEvent); break }
-                else if (event.Building === 'NICK') { locations.get('Nick Courts 3 - 6').events.push(newEvent); break }
+                else if (event.Building === 'NICK') { locations.get('Nick Courts 3-6').events.push(newEvent); break }
             case ('Court 7') :
                 if (event.Building === 'BAKKE') { locations.get('Courts 5-8').events.push(newEvent); break }
                 else if (event.Building === 'NICK') { locations.get('Nick Courts 7 & 8').events.push(newEvent); break }
