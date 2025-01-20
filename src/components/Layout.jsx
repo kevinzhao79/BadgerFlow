@@ -10,8 +10,10 @@ function Layout() {
             <header className="fixed-header">
                 <NavBar />
             </header>
-            <div className="layout-spacer"></div>
-            <Outlet />
+            <div className="layout-spacer">
+                <Outlet className="outlet-style" />
+            </div>
+            
         </>
     );
 }

@@ -8,5 +8,6 @@
 }
 
 .layout-spacer {
-    height: 8vh;
+    margin-top : 8vh;
+    height: 92vh;
 }

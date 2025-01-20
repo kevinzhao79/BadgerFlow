@@ -1,163 +1,230 @@
-import { useRef } from 'react'
-import { Container, Row, Col, Card, Button, Form} from 'react-bootstrap'
+import { useRef, useState } from 'react'
+import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap'
 import axios from 'axios'
-
+import { motion, AnimatePresence } from 'framer-motion'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../styles/screens.css'
 import '../styles/login.css'
 
-import NavBar from '../components/NavBar'
+function Login() {
+    const [showRegister, setShowRegister] = useState(false)
 
-function Login(props) {
-
-    const registerUsername = useRef('')
-    const registerPassword = useRef('')
-    const registerConfirmPassword = useRef('')
+    // Refs
     const loginUsername = useRef('')
     const loginPassword = useRef('')
+    const registerConfirmPassword = useRef('')
 
-    const register = async () => {
-
-        const username = registerUsername.current.value
-        const password = registerPassword.current.value
-        const confirmPassword = registerConfirmPassword.current.value
-
-        // console.log(`Attempting to register user ${username} with password ${password} and confirmed password ${confirmPassword}.`)
-
-        if (username.length < 1 || username.length > 64) {
-            alert('Error: Username must be between 1 and 64 characters.')
-            return
-        }
-        else if (password.length < 1 || password.length > 64) {
-            alert('Error: Password must be between 1 and 64 characters.')
-            return
-        }
-        else if (password !== confirmPassword) {
-            alert('Error: Passwords must match.')
-            return
-        }
-
-        const body = {
-            username : username, 
-            password : password
-        }
-        
-        try {
-            const resp = await axios.post('http://localhost:3000/register', body)
-            alert(resp.data.msg)
-        }
-        catch (error) {
-            console.log('error:', error)
-        }
-
-        registerUsername.current.value = ''
-        registerPassword.current.value = ''
-        registerConfirmPassword.current.value = ''
-        
-        // console.log(`Register user ${username} returned with response: ${message}`)
-
-    }
-
-    const login = async () => {
-
+    // Handle form submission
+    const handleSubmit = async () => {
         const username = loginUsername.current.value
         const password = loginPassword.current.value
 
-        // console.log(`Attempting to login user ${user} with password ${pass}.`)
-
+        // Basic validation
         if (username.length < 1 || username.length > 64) {
             alert('Error: Username must be between 1 and 64 characters.')
             return
         }
-        else if (password.length < 1 || password.length > 64) {
+        if (password.length < 1 || password.length > 64) {
             alert('Error: Password must be between 1 and 64 characters.')
             return
         }
 
-        const body = {
-            username : username, 
-            password : password
+        // If registering, also check confirm password
+        if (showRegister) {
+            const confirmPassword = registerConfirmPassword.current.value
+            if (password !== confirmPassword) {
+                alert('Error: Passwords must match.')
+                return
+            }
         }
-
-        let resp = ''
 
         try {
-            resp = await axios.post('http://localhost:3000/login', body)
-        }
-        catch (error) {
-            resp = error
+            if (showRegister) {
+                // REGISTER
+                const resp = await axios.post('http://localhost:3000/register', {
+                    username,
+                    password
+                })
+                alert(resp.data.msg)
+            } else {
+                // LOGIN
+                const resp = await axios.post('http://localhost:3000/login', {
+                    username,
+                    password
+                })
+                alert(resp.data.msg)
+            }
+        } catch (error) {
+            console.error('error:', error)
+            alert('An error occurred. Check console for details.')
         }
 
-        alert(resp.data.msg)
-
+        // Clear fields
         loginUsername.current.value = ''
         loginPassword.current.value = ''
-
-        // console.log(`Login user ${username} returned with response: ${resp}`)
-
+        if (registerConfirmPassword.current) {
+            registerConfirmPassword.current.value = ''
+        }
     }
 
     return (
-    <Container fluid>
-        <Card >
-            <Row style={{display : 'flex', width : '100%'}}>
-                <Col xs={12} sm={6}>
-                    <Card.Title> Register </Card.Title>
-                    <Card.Body  style={{padding : "0 0 0 0"}}>
-                        <Card.Text> to save your pinned Locations to your dashboard!</Card.Text>
-                        <Form style={{width : '100%'}}>
-                            <Form.Group as={Row}>
-                                <Form.Label column sm={3}> Username </Form.Label>
-                                <Col sm={6}>
-                                    <Form.Control type='text' placeholder='Username' ref={registerUsername} />
-                                </Col>
-                            </Form.Group>
+        <Container fluid className="login-container">
+            <Card
+                className="login-card"
+                
+            >
+                {/* Title Area with Fade */}
+                <AnimatePresence mode="wait">
+                    {showRegister ? (
+                        <motion.div
+                            key="registerTitle"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <Card.Title>Register</Card.Title>
+                        </motion.div>
+                    ) : (
+                        <motion.div
+                            key="loginTitle"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <Card.Title>Login</Card.Title>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
-                            <Form.Group as={Row}>
-                                <Form.Label column sm={3}> Password </Form.Label>
-                                <Col sm={6}>
-                                    <Form.Control type='password' placeholder='Password' ref={registerPassword} />
-                                </Col>
-                            </Form.Group>
+                <Card.Body style={{ padding: 0 }}>
+                    <AnimatePresence mode="wait">
+                        {showRegister ? (
+                            <motion.div
+                                key="registerText"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <Card.Text style={{ marginBottom: '1rem' }}>
+                                    Create an account to save pinned locations!
+                                </Card.Text>
+                            </motion.div>
+                        ) : (
+                            <motion.div
+                                key="loginText"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                    <Card.Text style={{ marginBottom: '1rem' }}>
+                                    Welcome Back! sign in to view pinned locations.
+                                </Card.Text>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
-                            <Form.Group as={Row}>
-                                <Form.Label column sm={3}> Confirm Password </Form.Label>
-                                <Col sm={6}>
-                                    <Form.Control type='password' placeholder='Confirm Password' ref={registerConfirmPassword} />
-                                </Col>
-                            </Form.Group>
-                        </Form>
-                        <Button name='Submit' variant='primary' onClick={register} > Submit </Button>
-                    </Card.Body>
-                </Col>
+                    {/* Single Form for both Login and Register */}
+                    <Form style={{ width: '100%' }}>
+                        <Form.Group as={Row} className="mb-3">
+                            <Col>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Username"
+                                    ref={loginUsername}
+                                />
+                            </Col>
+                        </Form.Group>
 
-                <Col xs={12} sm={6}>
-                    <Card.Title> Login </Card.Title>
-                    <Card.Body style={{padding : "0 0 0 0"}}>
-                        <Card.Text> if you've already registered! </Card.Text>
-                        <Form style={{width : '100%'}}>
-                            <Form.Group as={Row}>
-                                <Form.Label column sm={3}> Username </Form.Label>
-                                <Col sm={6}>
-                                    <Form.Control type='text' placeholder='Username' ref={loginUsername} />
-                                </Col>
-                            </Form.Group>
+                        <Form.Group as={Row} className="mb-3">
+                            <Col>
+                                <Form.Control
+                                    type="password"
+                                    placeholder="Password"
+                                    ref={loginPassword}
+                                />
+                            </Col>
+                        </Form.Group>
 
-                            <Form.Group as={Row}>
-                                <Form.Label column sm={3}> Password </Form.Label>
-                                <Col sm={6}>
-                                    <Form.Control type='password' placeholder='Password' ref={loginPassword} />
-                                </Col>
-                            </Form.Group>
-                        </Form>
-                        <Button name='Submit' variant='primary' onClick={(loginUsername, loginPassword) => login(loginUsername, loginPassword)}> Submit </Button>
-                    </Card.Body>
-                </Col>
-            </Row>
-        </Card>
-    </Container>
-        )
+                        <AnimatePresence initial={false} mode="wait">
+                            {showRegister && (
+                                <motion.div
+                                    key="confirmPasswordRow"
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: 'auto', opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    style={{ overflow: 'hidden' }}
+                                >
+                                    <Form.Group as={Row} className="mb-3">
+                                        <Col>
+                                            <Form.Control
+                                                type="password"
+                                                placeholder="Confirm Password"
+                                                ref={registerConfirmPassword}
+                                            />
+                                        </Col>
+                                    </Form.Group>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </Form>
+
+                    {/* Submit Button */}
+                    <Button
+                        variant="primary"
+                        onClick={handleSubmit}
+                        style={{ marginTop: '0.5rem' }}
+                        className="submit-button"
+                    >
+                        {showRegister ? 'Register' : 'Login'}
+                    </Button>
+                </Card.Body>
+
+                <AnimatePresence mode="wait">
+                    {showRegister ? (
+                        <motion.p
+                            key="toggle-register"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            style={{ marginTop: '1rem' }}
+                        >
+                            Already have an account?{' '}
+                            <span
+                                onClick={() => setShowRegister(false)}
+                                style={{ textDecoration: 'underline', cursor: 'pointer' }}
+                            >
+                                Sign in here
+                            </span>
+                        </motion.p>
+                    ) : (
+                        <motion.p
+                            key="toggle-login"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            style={{ marginTop: '1rem' }}
+                        >
+                            Don&apos;t have an account?{' '}
+                            <span
+                                onClick={() => setShowRegister(true)}
+                                style={{ textDecoration: 'underline', cursor: 'pointer' }}
+                            >
+                                Register here
+                            </span>
+                        </motion.p>
+                    )}
+                </AnimatePresence>
+            </Card>
+        </Container>
+    )
 }
 
 export default Login
