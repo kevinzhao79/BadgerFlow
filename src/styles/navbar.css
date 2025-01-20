@@ -10,6 +10,12 @@
     padding: 0 1rem; 
 }
 
+.custom-navbar .btn:active,
+.custom-navbar .btn:focus:active {
+  background-color: var(--active-color) !important;
+  color: var(--background-color) !important;
+  border-color: var(--accent-color) !important;
+}
 
 /* Align NavBar buttons to be on the outer edges of the container */
 .col:first-child {
