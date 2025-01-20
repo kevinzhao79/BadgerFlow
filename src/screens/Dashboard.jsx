@@ -13,9 +13,6 @@ function Dashboard(props) {
 
     return (
     <Container fluid>
-        <Row>
-            <NavBar />
-        </Row>
         <Card>
             <Card.Title>Dashboard</Card.Title>
         </Card>

@@ -2,6 +2,9 @@
 
 import { BrowserRouter, Route, Routes } from 'react-router'
 
+import Layout from './components/Layout'
+import ScrollToTop from './helpers/ScrollToTop'
+
 import './app.css'
 
 import Home from './screens/Home'
@@ -15,17 +18,20 @@ import Dashboard from './screens/Dashboard'
 function App() {
 
     return (
-    <BrowserRouter>
-        <Routes>
-        <Route index element={<Home/>} />
-        <Route path='/locations' element={<Locations />} />
-        <Route path='/dashboard' element={<Dashboard />} />
-        
-        <Route path='/login' element={<Login />} />
-        <Route path='/logout' element={<Logout />} />
-        <Route path="*" element={<PageNotFound />} />
-        </Routes>
-    </BrowserRouter>
+        <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route path='locations' element={<Locations />} />
+                    <Route path='dashboard' element={<Dashboard />} />
+
+                    <Route path='login' element={<Login />} />
+                    <Route path='logout' element={<Logout />} />
+                    <Route path="*" element={<PageNotFound />} /></Route> 
+                </Routes>
+            </BrowserRouter>
+    
     )
     
 }

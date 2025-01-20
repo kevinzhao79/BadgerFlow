@@ -1,12 +1,15 @@
 /* navbar.css */
 
-navbar {
-    height: 15vh;
-    display: flex; /* Optional: Use Flexbox to align content */
+.custom-navbar {
+    background-color: var(--accent-color) !important;
+    height: 8vh;
+    display: flex; /* Align content */
     flex-direction: row;
-    justify-content: space-between; /* Center content vertically */
-    align-items: center; /* Center content horizontally */
+    justify-content: space-between;
+    align-items: center;   
+    padding: 0 1rem; 
 }
+
 
 /* Align NavBar buttons to be on the outer edges of the container */
 .col:first-child {
@@ -40,7 +43,7 @@ button.btn:hover {
 /* Styling for heading */
 h1 {
     text-align: center;
-    color: var(--text-color);
+    color: var(--accent-color);
     font-family: var(--primary-font);
     font-size: var(--title-size);
 }

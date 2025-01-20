@@ -2,8 +2,10 @@ import { useRef } from 'react'
 import { Container, Row, Col, Card, Button, Form} from 'react-bootstrap'
 import axios from 'axios'
 
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../styles/screens.css'
+import '../styles/login.css'
 
 import NavBar from '../components/NavBar'
 
@@ -98,10 +100,7 @@ function Login(props) {
 
     return (
     <Container fluid>
-        <Row>
-            <NavBar />
-        </Row>
-        <Card>
+        <Card >
             <Row style={{display : 'flex', width : '100%'}}>
                 <Col xs={12} sm={6}>
                     <Card.Title> Register </Card.Title>

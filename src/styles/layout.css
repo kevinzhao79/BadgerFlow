@@ -1,0 +1,12 @@
+/*layout.css*/
+
+.fixed-header {
+    height: 8vh;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+}
+
+.layout-spacer {
+    height: 8vh;
+}

@@ -11,9 +11,6 @@ function PageNotFound() {
     return (
         <Container fluid>
             <Row>
-                <NavBar />
-            </Row>
-            <Row>
                 <h3>Error 404 - Page Not Found.</h3>
             </Row>
         </Container>

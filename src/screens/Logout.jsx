@@ -23,9 +23,6 @@ function Logout(props) {
     return (
     <Container fluid>
         <Row>
-            <NavBar />
-        </Row>
-        <Row>
             <p> You have successfully logged out.</p>
         </Row>
         <Row>

@@ -13,9 +13,6 @@ function Home(props) {
 
     return (
     <Container fluid>
-        <Row>
-            <NavBar />
-        </Row>
         <Card>
             <Card.Title>Welcome to BadgerFlow!</Card.Title>
             <Card.Body>
